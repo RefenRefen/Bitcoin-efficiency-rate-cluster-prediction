@@ -28,7 +28,7 @@ if 'gold' in col_list:
     my_col = db["gold"]
     my_col.drop()
 
-"""Collecting Yahoo Finance Data To MongoDB"""
+"""Collecting Yahoo Finance Data in MongoDB"""
 
 for cr in range(len(curr_list)):
 
@@ -50,7 +50,7 @@ for cr in range(len(curr_list)):
                             "volume": str(currency_df.iloc[i][5]),
                             })
 
-"""Collecting Binance Data To MongoDB"""
+"""Collecting Binance Data in MongoDB"""
 
 url = 'https://api.binance.com/api/v3/klines'
 symbol = 'BTCUSDT'
@@ -95,3 +95,6 @@ try:
 
 except:
     pass
+
+print('Fetching data has finished!')
+print('Data is in MongoDB now!')

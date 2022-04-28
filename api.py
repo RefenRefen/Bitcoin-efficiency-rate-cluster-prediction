@@ -1,11 +1,11 @@
-import json
-import graphene
-from model import Bitcoin as BitcoinModel
+from graphene_mongo import MongoengineObjectType
 from model import CrudeOil as CrudeOilModel
+from model import Bitcoin as BitcoinModel
 from model import Gold as GoldModel
 from mongoengine import connect
-from graphene_mongo import MongoengineObjectType, MongoengineConnectionField
 from aiohttp import web
+import graphene
+import json
 
 
 async def mongo(request):

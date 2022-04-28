@@ -1,11 +1,11 @@
-import numpy as np
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 class Clustering:
-    def __init__(self, df_dict):
+    def __init__(self, df_dict, plot: bool = False):
         self.df_dictionary = df_dict
+        self.plot = plot
 
     def efficiency_rate_clustering(self):
         dfs = list()
@@ -13,8 +13,6 @@ class Clustering:
         for name, data_frame in self.df_dictionary.items():
             dfs.append(data_frame)
             dfs_name.append(name)
-
-        # gold_bitcoin_df = dfs[0].join(dfs[1].set_index('date'), lsuffix='_gold', rsuffix='_bitcoin', on='date')
 
         for i in dfs:
 
@@ -28,9 +26,6 @@ class Clustering:
         return_dict = dict()
         for df in dfs:
             rate_array = np.array(df['efficiency_rate'])
-            # rate_array = [1 if i < 0 else i for i in rate_array]
-            # rate_array = np.delete(rate_array, rate_array.argmax())
-
             rate_array = np.nan_to_num(rate_array, copy=True, nan=0.0, posinf=None, neginf=None)
             for i in range(2):
                 rate_array = np.where(rate_array == rate_array[rate_array.argmax()], 0, rate_array)
@@ -40,16 +35,13 @@ class Clustering:
             model = KMeans(init='k-means++', n_clusters=3, random_state=0)
             model.fit(rate_array)
             clusters_predict = model.predict(rate_array)
-            # print(list(clusters_predict).count(0))
-            # print(list(clusters_predict).count(1))
-            # print(list(clusters_predict).count(2))
 
-            # fig, ax = plt.subplots(figsize=(8, 6))
-            # ax.scatter(rate_array, [1 for i in range(rate_array.shape[0])], s=50, c=clusters_predict, cmap='viridis')
-            # ax.set_xlabel('Feature 1')
-            # ax.set_ylabel('Feature 2')
-            # ax.set_title(dfs_name[j])
-            # plt.show()
+            if self.plot:
+                fig, ax = plt.subplots(figsize=(8, 6))
+                ax.scatter(rate_array, [1 for i in range(rate_array.shape[0])], s=50, c=clusters_predict, cmap='viridis')
+                ax.set_xlabel('Efficiency Rate')
+                ax.set_title(dfs_name[j] + ' clusters')
+                plt.show()
 
             '''Mapping Clusters'''
             cluster_centers = list()
