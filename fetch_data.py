@@ -28,7 +28,7 @@ if 'gold' in col_list:
     my_col = db["gold"]
     my_col.drop()
 
-"""Collecting Yahoo Finance Data in MongoDB"""
+"""Collecting Yahoo Finance Data Into The MongoDB"""
 
 for cr in range(len(curr_list)):
 
@@ -50,7 +50,7 @@ for cr in range(len(curr_list)):
                             "volume": str(currency_df.iloc[i][5]),
                             })
 
-"""Collecting Binance Data in MongoDB"""
+"""Collecting Binance Data To MongoDB"""
 
 url = 'https://api.binance.com/api/v3/klines'
 symbol = 'BTCUSDT'
@@ -59,6 +59,7 @@ interval = '1d'
 last_day = datetime.datetime(2017, 8, 17).date()
 today = datetime.datetime.today().date()
 next_to_last_day_timestamp = datetime.datetime(2017, 8, 17).timestamp()
+f = 0
 try:
     while today != last_day:
         start = str(int(next_to_last_day_timestamp * 1000))
@@ -94,7 +95,12 @@ try:
         next_to_last_day_timestamp = datetime.datetime(year, month, day).timestamp() + 86400.0
 
 except:
+    f = 1
     pass
 
-print('Fetching data has finished!')
-print('Data is in MongoDB now!')
+if f == 1:
+    print("There is some problem with fetching bitcoin data.")
+    print("Make sure that your vpn is on.")
+
+else:
+    print("Data is ready.")
