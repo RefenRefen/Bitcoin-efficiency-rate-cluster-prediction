@@ -8,6 +8,7 @@ import graphene
 import json
 
 
+
 async def mongo(request):
     data = request
     connect('currency_pairs', host='localhost', port=27017)
